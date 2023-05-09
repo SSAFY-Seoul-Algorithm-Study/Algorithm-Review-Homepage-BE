@@ -18,11 +18,13 @@ public class ProblemServiceImpl implements ProblemService {
 	private ProblemDao pDao;
 
 	@Override
+	@Transactional
 	public int insertProblem(Problem problem) {
 		return pDao.insertProblem(problem);
 	}
 
 	@Override
+	@Transactional
 	public int updateProblem(Problem problem) {
 		return pDao.updateProblem(problem);
 	}
@@ -31,7 +33,13 @@ public class ProblemServiceImpl implements ProblemService {
 	public Problem searchByNum(int pNum) {
 		return pDao.searchByNum(pNum);
 	}
-
+	
+	@Override
+	public List<Problem> selectAll() {
+		return pDao.selectAll();
+	}
+	
+	 
 	@Override
 	public List<Problem> selectByCondition(SearchCondition searchCondition) {
 		return pDao.selectByCondition(searchCondition);

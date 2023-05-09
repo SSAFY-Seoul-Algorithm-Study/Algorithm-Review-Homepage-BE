@@ -13,6 +13,8 @@ public interface ProblemDao {
 
 	Problem searchByNum(int pNum);
 	
+	List<Problem> selectAll();
+	
 	List<Problem> selectByCondition(SearchCondition searchCondition);
 
 }

@@ -7,6 +7,7 @@ import com.Seoul5.Algo.model.dto.SearchCondition;
 
 public interface ProblemService {
 
+	
 	int insertProblem(Problem problem);
 
 	int updateProblem(Problem problem);
@@ -14,5 +15,7 @@ public interface ProblemService {
 	Problem searchByNum(int pNum);
 
 	List<Problem> selectByCondition(SearchCondition searchCondition);
+
+	List<Problem> selectAll();
 
 }
