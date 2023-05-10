@@ -12,6 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Seoul5AlgoApplication implements WebMvcConfigurer {
 	public static void main(String[] args) {
+		
 		SpringApplication.run(Seoul5AlgoApplication.class, args);
 	}
 

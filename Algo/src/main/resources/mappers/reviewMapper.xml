@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Seoul5.Algo.model.dao.ReviewDao">
+	<resultMap type="Review" id="reviewMap">
+		<result column="id" property="id"/>
+		<result column="User_id" property="userId"/>
+		<result column="Problem_id" property="pNum"/>
+		<result column="content" property="content"/>
+		<result column="rate" property="rate"/>
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
+
+	<!-- 내(사용자)가 review한 문제들 조회 -->
+	<select id="selectByUser" parameterType="String" resultType="int">
+		SELECT Problem_id
+		FROM Review
+		WHERE User_id = #{userId}
+		ORDER BY rate DESC
+	</select>
+	
+	<!-- 사람들이 최근에 리뷰한 문제들 조회 -->
+	<select id="selectOrderByDate" resultType="int">
+		SELECT Problem_id
+		FROM Review
+		WHERE id in (SELECT DISTINCT p.Problem_id
+		FROM (SELECT * FROM Review ORDER BY reg_date DESC) p);
+	</select>
+
+	<!-- 문제별 review 조회 -->
+	<select id="selectByP" parameterType="int" resultMap="reviewMap">
+		SELECT *
+		FROM Review
+		WHERE Problem_id = #{pNum}
+		ORDER BY rate DESC, content
+	</select>
+	
+	<!-- 문제별 average rate 조회 -->
+	<select id="averageRateByP" parameterType="int" resultType="double">
+		SELECT round(sum(rate) / count(*), 2)
+		FROM Review
+		WHERE Problem_id = #{pNum}
+	</select>
+
+	<!-- review 등록 -->
+	<insert id="regist" parameterType="Review">
+		INSERT INTO Review(User_id, Problem_id, content, rate)
+		VALUES(#{userId}, #{pNum}, #{content}, #{rate})
+	</insert>
+	
+	<!-- review 상세 조회 -->
+	<select id="selectById" parameterType="int"  resultMap="reviewMap">
+		SELECT *
+		FROM Review
+		WHERE id = #{id};
+	</select>
+	
+	<!-- review 삭제 -->
+	<delete id="deleteById" parameterType="int">
+		DELETE FROM Review
+		WHERE id = #{id};
+	</delete>
+	
+	<!-- review 수정 -->
+	<update id="updateById" parameterType="Review">
+		UPDATE Review
+		SET content = #{content}, rate = #{rate}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -6,13 +6,20 @@ import com.Seoul5.Algo.model.dto.Review;
 
 public interface ReviewDao {
 	
-	int insertReview(Review review);
+	List<Review> selectByP(int pNum);
 
-	int updateReview(Review review);
+	int regist(Review review);
 
-	Review selectReview(int reviewId);
- 
-	int deleteReview(int reviewId);
- 
-	List<Review> selectReviewByProblem(int pNum);
+	int deleteById(int id);
+
+	int updateById(Review review);
+
+	Review selectById(int id);
+
+	List<Integer> selectByUser(String userId);
+
+	List<Integer> selectOrderByDate();
+
+	double averageRateByP(int pNum);
+	
 }
