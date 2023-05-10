@@ -11,16 +11,16 @@
 	</select>
 	
 	
-	<!-- 문제 디비에 넣기  -->
+	<!-- 문제 디비에 넣기 , 새로 문제를 만들때는 기본값 0.0 (디비 default에서 설정하기)-->
 	<insert id="insertProblem" parameterType="Problem">
 		INSERT INTO Problem
-		VALUES(#{pNum}, #{algo})
+		VALUES(#{pNum}, 0.0 )
 	</insert>
 	
-	<!--  문제 수정, 번호는 수정불가 내용만 바꿀 수 있음  -->
+	<!--  문제 수정, 번호는 수정불가 평점만 업데이트됨  -->
 	<update id="updateProblem" parameterType="Problem">
 		UPDATE Problem
-		SET algo=#{algo}
+		SET grade=#{grade}
 		WHERE pNum = #{pNum} 
 	</update>	 
 	
@@ -31,5 +31,13 @@
 		FROM Problem
 		WHERE algo like concat('%', #{word}, '%') 
 	</select>
+	
+	<!-- 문제정보(알고리즘) 디비에 넣기-->
+	<insert id="insertProblemInfo" parameterType="ProblemInfo">
+		INSERT INTO ProblemInfo
+		VALUES(#{pNum}, #{algo} )
+	</insert>
+	
+	
 	
 </mapper>
