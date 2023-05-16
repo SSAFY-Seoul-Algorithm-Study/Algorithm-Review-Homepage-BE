@@ -3,13 +3,39 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Seoul5.Algo.model.dao.UserDao">
 
-	<!-- User에서 모든 정보를 검색한다. -->
+	<insert id="insert" parameterType="User">
+		INSERT INTO
+		User(id,name,password,BOJid,email,img,difficulty,algo,again,solvedCnt,week)
+		VALUES(#{id}, #{name}, #{password}, #{BOJid}, #{email}, #{img},
+		#{difficulty},#{algo}, #{again}, #{solvedCnt},#{week})
+	</insert>
+
+	<select id="selectById" resultType="User" parameterType="String">
+		SELECT * FROM User WHERE id = #{id}
+	</select>
+
 	<select id="selectAll" resultType="User">
 		SELECT * FROM User
 	</select>
-	
-	<insert id="insert" parameterType="User">
-		INSERT INTO User
-		VALUES(#{id}, #{name}, #{password}, #{BOJid}, #{email}, #{img}, #{solvedSum})
-	</insert>
+
+	<select id="searchById" resultType="User" parameterType="String">
+		SELECT *
+		FROM User WHERE id LIKE concat('%',#{id},'%');
+	</select>
+
+	<update id="update" parameterType="User">
+		UPDATE User
+		SET name = #{name},
+		password = #{password}, BOJid = #{BOJid}, email = #{email}, img =
+		#{img}, orgImg = #{orgImg}, difficulty=#{difficulty},algo=#{algo},
+		again=#{again},week=#{week}
+		WHERE id = #{id}
+	</update>
+
+	<update id="weeklyUpdate" parameterType="User">
+		UPDATE User
+		SET solvedCnt = #{solvedCnt}
+		WHERE id=#{id}
+	</update>
+
 </mapper>
